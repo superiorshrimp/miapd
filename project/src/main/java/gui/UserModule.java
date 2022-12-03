@@ -65,7 +65,7 @@ public class UserModule {
 
     //Function to get results from BE
     private Phone getResults(){
-        return new Phone(1,1,1,1,1,1,1,1); //temporarily return basic phone
+        return new Phone("a", 1,1,1,1,1,1,1,1); //temporarily return basic phone
     }
     public void showResults(){
         Stage resultsStage = new Stage();

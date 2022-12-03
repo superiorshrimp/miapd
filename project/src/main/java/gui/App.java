@@ -14,14 +14,17 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import main.Phone;
+import main.PhonesGenerator;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class App extends javafx.application.Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        PhonesGenerator phonesGenerator = new PhonesGenerator("../data/phones/");
+        LinkedList<Phone> phones = phonesGenerator.getPhones();
 
         ArrayList<String> labels = Phone.getLabels();
         ExpertModule expertModule = new ExpertModule(labels, this);
