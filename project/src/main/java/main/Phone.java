@@ -11,11 +11,12 @@ public class Phone{
     private final int storage; //gbs
     private final int battery; //idk czy sot czy mah
     private final int charging; //Ws
+    private final int softwareScore;
     private static final int n = 7; //trzeba wybrać
     private final ArrayList<Integer> attributes = new ArrayList<>();
     private final static ArrayList<String> labels = new ArrayList<>(List.of("price", "features", "ram", "cpu", "storage", "battery", "charging"));
 
-    public Phone(int price, int features, int ram, int cpu, int storage, int battery, int charging){
+    public Phone(int price, int features, int ram, int cpu, int storage, int battery, int charging, int softwareScore){
         this.price = price;
         this.features = features;
         this.ram = ram;
@@ -23,6 +24,7 @@ public class Phone{
         this.storage = storage;
         this.battery = battery;
         this.charging = charging;
+        this.softwareScore = softwareScore;
 
         this.attributes.addAll(List.of(this.price, this.features, this.ram, this.cpu, this.storage, this.battery, this.charging));
     }
