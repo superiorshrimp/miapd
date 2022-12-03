@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,7 +16,6 @@ import javafx.stage.WindowEvent;
 import main.Phone;
 
 import java.util.ArrayList;
-import java.util.stream.IntStream;
 
 public class UserModule {
     ArrayList<Label> labels = new ArrayList<>();
@@ -43,8 +43,8 @@ public class UserModule {
         }
 
         Button nextButton = new Button("Next");
-
-        FlowPane flowPane = new FlowPane(hBox, nextButton);
+        Label infoLabel = new Label("How important to you are");
+        FlowPane flowPane = new FlowPane(infoLabel, hBox, nextButton);
 
         flowPane.setAlignment(Pos.CENTER);
         Scene scene = new Scene(flowPane);

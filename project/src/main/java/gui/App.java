@@ -17,13 +17,15 @@ import main.Phone;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class App extends javafx.application.Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        ExpertModule expertModule = new ExpertModule();
-        UserModule userModule = new UserModule(Phone.getLabels());
+        ArrayList<String> labels = Phone.getLabels();
+        ExpertModule expertModule = new ExpertModule(labels, this);
+        UserModule userModule = new UserModule(labels);
 
         FlowPane flowPane = new FlowPane(Orientation.VERTICAL);
         flowPane.setHgap(5);
@@ -68,7 +70,7 @@ public class App extends javafx.application.Application {
 
         expertButton.setOnAction(event -> {
             primaryStage.close();
-            expertModule.start();
+            expertModule.start(labels.get(0));
         });
 
         userButton.setOnAction(event -> {
