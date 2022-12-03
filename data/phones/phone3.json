@@ -1,0 +1,11 @@
+{
+  "name": "xiaomi 12 Pro",
+  "price": 5199,
+  "features" : ["eSIM", "dualSIM", "IP68", "stereo", "5g"],
+  "ram": 12,
+  "cpu": 985226,
+  "storage": 256,
+  "battery": 4600,
+  "charging": 120,
+  "software": "Android 12"
+}

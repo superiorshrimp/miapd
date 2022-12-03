@@ -1,0 +1,11 @@
+{
+  "name": "Samsung Galaxy S22",
+  "price": 3999,
+  "features" : ["eSIM", "dualSIM", "IP68", "stereo", "5g"],
+  "ram": 8,
+  "cpu": 968359,
+  "storage": 128,
+  "battery": 5000,
+  "charging": 45,
+  "software": "Android 13"
+}
