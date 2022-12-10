@@ -89,4 +89,8 @@ public class ExpertModule {
             else this.stageNumber += 1;
         });
     }
+
+    public double getConsistencyIndex(){
+        return 1.0;
+    }
 }
