@@ -16,26 +16,12 @@ import javafx.stage.WindowEvent;
 import main.Phone;
 import main.PhonesGenerator;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class App extends javafx.application.Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        //
-        String[] args = "python ../math/consistency_index.py 1 7 0.1666 0.5 0.25 0.1666 4 0.1428 1 0.3333 5 0.2 0.1428 5 6 3 1 6 3 2 8 2 0.2 0.1666 1 8 0.2 8 4 5 0.3333 0.125 1 0.1111 2 6 7 0.5 5 9 1 2 0.25 0.2 0.125 0.125 0.5 0.5 1".split(" ");
-        Process proc = Runtime.getRuntime().exec(args);
-        System.out.println("bbbbbbbb");
-        proc.waitFor();
-        BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-        String s = null;
-        while ((s = stdInput.readLine()) != null) {
-            System.out.println(s);
-        }
-        //
-
         PhonesGenerator phonesGenerator = new PhonesGenerator("../data/phones/");
         LinkedList<Phone> phones = phonesGenerator.getPhones();
 
@@ -49,9 +35,8 @@ public class App extends javafx.application.Application {
         flowPane.setPadding(new Insets(0, 0, 0, 0)); // set top, right, bottom, left
 
         HBox hBox = new HBox();
-        Button expertButton = new Button("I`m expert");
-        Button userButton = new Button("I`m user");
-
+        Button expertButton = new Button("I`m an expert");
+        Button userButton = new Button("I`m a user");
 
         hBox.setAlignment(Pos.CENTER);
         Image image = new Image("xiaomi lepsze.jpg");
@@ -86,7 +71,7 @@ public class App extends javafx.application.Application {
 
         expertButton.setOnAction(event -> {
             primaryStage.close();
-            expertModule.start(labels.get(0));
+            expertModule.start();
         });
 
         userButton.setOnAction(event -> {
