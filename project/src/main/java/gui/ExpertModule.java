@@ -3,11 +3,13 @@ package gui;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -17,17 +19,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class ExpertModule{
-    ArrayList<Label> labels = new ArrayList<>();
+    ArrayList<String> labels;
     Application app;
 
     GridPane matrixGrid = new GridPane();
-    ArrayList<ArrayList<Double>> matrix = new ArrayList<>(this.labels.size());
-    ArrayList<ArrayList<Text>> matrixContent = new ArrayList<>(this.labels.size());
+    ArrayList<ArrayList<Double>> matrix;
+    ArrayList<ArrayList<Text>> matrixContent;
     public ExpertModule(ArrayList<String> labels, Application app){
-        for(String label : labels){
-            this.labels.add(new Label(label));
-            this.app = app;
-        }
+        this.app = app;
+        this.labels = labels;
+
+        this.matrix = new ArrayList<>(this.labels.size());
+        this.matrixContent = new ArrayList<>(this.labels.size());
 
         for(int row = 0; row<this.labels.size(); row++){
             matrix.add(new ArrayList<>(this.labels.size()));
@@ -42,15 +45,19 @@ public class ExpertModule{
             for(int col = 0; col<this.labels.size(); col++){
                 if(col == row){
                     Text content = new Text("1");
-                    matrixGrid.add(content, col, row);
+                    content.setFont(Font.font("Verdana", 20));
+                    content.setFill(Color.BLUE);
+                    matrixGrid.add(content, col+1, row+1);
                     GridPane.setHalignment(content, HPos.CENTER);
                     matrixContent.get(row).add(content);
                     matrix.get(row).add((double)(1));
                 }
                 else if(col < row){
                     Text content = new Text("-");
+                    content.setFont(Font.font("Verdana", 20));
+                    content.setFill(Color.RED);
                     matrixContent.get(row).add(content);
-                    matrixGrid.add(content, col, row);
+                    matrixGrid.add(content, col+1, row+1);
                     GridPane.setHalignment(content, HPos.CENTER);
                     matrix.get(row).add((double)(-1));
                 }
@@ -58,17 +65,21 @@ public class ExpertModule{
                     ChoiceBox<String> choiceBox = new ChoiceBox<>(FXCollections.observableArrayList(
                         "1/9", "1/7", "1/5", "1/3", "1", "3", "5", "7", "9"
                     ));
+                    choiceBox.setPrefSize(50, 50);
                     this.choiceBoxObserve(choiceBox, row, col);
                     matrixContent.get(row).add(null);
-                    matrixGrid.add(choiceBox, col, row);
+                    matrixGrid.add(choiceBox, col+1, row+1);
                     GridPane.setHalignment(choiceBox, HPos.CENTER);
                     matrix.get(row).add((double)(-1));
                 }
             }
         }
         Button previousButton = new Button("Previous");
+        previousButton.setPrefWidth(100);
         Button nextButton = new Button("Next");
+        nextButton.setPrefWidth(100);
         HBox buttons = new HBox();
+        buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(previousButton, nextButton);
 
         VBox root = new VBox();
@@ -115,7 +126,6 @@ public class ExpertModule{
         }
 
         System.out.println("consistency index: " + consistencyIndex);
-
     }
 
     public double getConsistencyIndex() throws Exception{
@@ -133,8 +143,6 @@ public class ExpertModule{
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
         String s = stdInput.readLine();
         if(s != null){
-//            int len = s.length();
-//            s = s.substring(1, Math.min(len-4, 11));
             return Double.parseDouble(s);
         }
         throw new Exception();
@@ -143,6 +151,15 @@ public class ExpertModule{
     private void setUpGridPane(){
         matrixGrid.setGridLinesVisible(true);
 
+        for(int i = 0; i<this.labels.size(); i++){
+            Text c1 = new Text(this.labels.get(i));
+            Text c2 = new Text(this.labels.get(i));
+            matrixGrid.add(c1, 0, i+1);
+            matrixGrid.add(c2, i+1, 0);
+            GridPane.setHalignment(c1, HPos.CENTER);
+            GridPane.setHalignment(c2, HPos.CENTER);
+        }
+
         int rowCount = this.labels.size();
         int columnCount = this.labels.size();
 
@@ -150,7 +167,7 @@ public class ExpertModule{
         rc.setMinHeight(50);
         rc.setMaxHeight(50);
 
-        for (int i = 0; i < rowCount; i++) {
+        for (int i = 0; i < rowCount+1; i++) {
             matrixGrid.getRowConstraints().add(rc);
         }
 
@@ -158,7 +175,7 @@ public class ExpertModule{
         cc.setMinWidth(50);
         cc.setMaxWidth(50);
 
-        for (int i = 0; i < columnCount; i++) {
+        for (int i = 0; i < columnCount+1; i++) {
             matrixGrid.getColumnConstraints().add(cc);
         }
     }
@@ -171,18 +188,21 @@ public class ExpertModule{
                 matrix.get(col).set(row, (double)(1));
                 Text content = matrixContent.get(col).get(row);
                 content.setText("1");
+                content.setFill(Color.GREEN);
             }
             else if(val.contains("/")){
                 matrix.get(row).set(col, (double)(1 / Integer.parseInt(val.substring(2))));
                 matrix.get(col).set(row, Double.parseDouble(val.substring(2)));
                 Text content = matrixContent.get(col).get(row);
                 content.setText(val.substring(2));
+                content.setFill(Color.GREEN);
             }
             else{
                 matrix.get(row).set(col, Double.parseDouble(val));
                 matrix.get(col).set(row, (double)(1 / Integer.parseInt(val)));
                 Text content = matrixContent.get(col).get(row);
                 content.setText("1/" + val);
+                content.setFill(Color.GREEN);
             }
         });
     }
