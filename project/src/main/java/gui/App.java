@@ -62,7 +62,7 @@ public class App extends javafx.application.Application {
 
         Scene scene = new Scene(borderPane);
 
-        primaryStage.setTitle("Getting Started");
+        primaryStage.setTitle("App");
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest((WindowEvent we) -> {

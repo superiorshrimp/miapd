@@ -132,12 +132,6 @@ public class ExpertModule{
         String path = "../data/priorities/priorities.txt";
 
         saveButton.setOnAction(event -> {
-            for(int row = 0; row<this.labels.size(); row++){
-                for(int col = 0; col<this.labels.size(); col++){
-                    System.out.print(this.matrix.get(row).get(col) + " ");
-                }
-                System.out.println();
-            }
             this.save(path);
         });
 
@@ -181,7 +175,7 @@ public class ExpertModule{
         throw new Exception();
     }
 
-    private boolean save(String path){
+    private void save(String path){
         if(this.isAllFilled()){
             StringBuilder sb = new StringBuilder();
 
@@ -193,12 +187,10 @@ public class ExpertModule{
                     int c = col;
                     int r = row;
                     if(row < col){
-                        int tmp = col;
                         c = row;
-                        r = tmp;
+                        r = col;
                     }
                     sb.append(this.matrixContentText.get(r).get(c));
-                    System.out.println(sb.toString());
                 }
             }
 
@@ -208,10 +200,10 @@ public class ExpertModule{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            return true;
         }
-        return false;
+        else{
+            System.out.println("priorities not saved; fill all fields");
+        }
     }
 
     private void load(String path){
