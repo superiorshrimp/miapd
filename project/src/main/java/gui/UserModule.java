@@ -42,10 +42,10 @@ public class UserModule {
             vBox.setAlignment(Pos.CENTER);
             vBox.setPadding(new Insets(10, 10, 10, 10));
             vBoxes.add(new Pair<>(vBox, i*7+i+1));
-            System.out.println(i*7+i+1);
-            System.out.println((i*7+i+1) / labels.size());
-            System.out.println((i*7+i+1) % labels.size());
-            System.out.println();
+//            System.out.println(i*7+i+1);
+//            System.out.println((i*7+i+1) / labels.size());
+//            System.out.println((i*7+i+1) % labels.size());
+//            System.out.println();
         }
         Collections.shuffle(vBoxes);
         Label label = this.labels.get(labels.size()-1);
@@ -61,7 +61,7 @@ public class UserModule {
         Button nextButton = new Button("Next");
         Label infoLabel = new Label("Compare importance of first feature to second");
         HBox hBox = new HBox(vBoxes.get(UserModule.stageNumber).getKey(), vBoxes.get(UserModule.stageNumber + 1).getKey());
-        System.out.println(UserModule.stageNumber);
+        //System.out.println(UserModule.stageNumber);
         int xIdx = vBoxes.get(UserModule.stageNumber).getValue() / labels.size();
         int yIdx = vBoxes.get(UserModule.stageNumber).getValue() % labels.size();
 
@@ -91,9 +91,9 @@ public class UserModule {
         cb.setOnAction(event -> {
             userPreferences[xIdx][yIdx] = cb.getValue();
             for (var line : this.userPreferences){
-                System.out.println(Arrays.toString(line));
+                //System.out.println(Arrays.toString(line));
             }
-            System.out.println();
+            //System.out.println();
         });
 
         userStage.setOnCloseRequest((WindowEvent we) -> {
@@ -111,10 +111,10 @@ public class UserModule {
         for ( int x = 0; x < size - 2; x ++ ){
             for ( int y = 2; y < size; y++ ){
                 if (x + y > 6) break;
-                System.out.println("x " + (y-2) + " y " + (x + y));
-                System.out.println("x " + (y-2) + " y " + (x + y -1));
-                System.out.println("x " + (x + y -1) + " y " + (x + y));
-                System.out.println();
+//                System.out.println("x " + (y-2) + " y " + (x + y));
+//                System.out.println("x " + (y-2) + " y " + (x + y -1));
+//                System.out.println("x " + (x + y -1) + " y " + (x + y));
+//                System.out.println();
                 userPreferences[y - 2][x + y] = Math.min((float) Math.sqrt(userPreferences[y - 2][x + y - 1] * userPreferences[x + y - 1][x + y]), 9);
             }
         }
@@ -122,15 +122,15 @@ public class UserModule {
         for ( int x = 0; x < size - 1; x++ ){
             for ( int y = 1; y < size; y++ ){
                 if (x + y > 6) break;
-                System.out.println("x " + (x + y) + " y " + (y - 1));
-                System.out.println();
+//                System.out.println("x " + (x + y) + " y " + (y - 1));
+//                System.out.println();
                 userPreferences[x + y][y - 1] = 1/userPreferences[y - 1][x + y];
             }
         }
 
-        System.out.println();
+        //System.out.println();
         for (var line : this.userPreferences){
-            System.out.println(Arrays.toString(line));
+            //System.out.println(Arrays.toString(line));
         }
         showResults();
     }
