@@ -126,6 +126,9 @@ public class ExpertModule{
         }
 
         System.out.println("consistency index: " + consistencyIndex);
+        if(consistencyIndex > 0.1){
+            System.out.println("Warning: consistency index is greater than 0.1, therefore results may not be correct!");
+        }
     }
 
     public double getConsistencyIndex() throws Exception{
