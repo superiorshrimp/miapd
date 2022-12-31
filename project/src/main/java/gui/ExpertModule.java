@@ -7,17 +7,20 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import main.Utils;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ExpertModule{
     ArrayList<String> labels;
@@ -144,7 +147,7 @@ public class ExpertModule{
     public void calculate(){
         double consistencyIndex = -1;
         try {
-            consistencyIndex = this.getConsistencyIndex();
+            consistencyIndex = Utils.getConsistencyIndex(this.matrix, this.labels.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,26 +156,21 @@ public class ExpertModule{
         if(consistencyIndex > 0.1){
             System.out.println("Warning: consistency index is greater than 0.1, therefore results may not be correct!");
         }
+
+        try {
+            this.showResults(Utils.getResults(this.matrix, this.labels, this.labels.size()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public double getConsistencyIndex() throws Exception{
-        //example:
-        //String[] args = "python ../math/consistency_index.py 1 7 0.1666 0.5 0.25 0.1666 4 0.1428 1 0.3333 5 0.2 0.1428 5 6 3 1 6 3 2 8 2 0.2 0.1666 1 8 0.2 8 4 5 0.3333 0.125 1 0.1111 2 6 7 0.5 5 9 1 2 0.25 0.2 0.125 0.125 0.5 0.5 1".split(" ");
-        StringBuilder command = new StringBuilder("python ../math/consistency_index.py");
-        for(int row = 0; row<this.labels.size(); row++){
-            for(int col = 0; col<this.labels.size(); col++){
-                command.append(" ").append(this.matrix.get(row).get(col));
-            }
-        }
-        String[] args = command.toString().split(" ");
-        Process proc = Runtime.getRuntime().exec(args);
-        proc.waitFor();
-        BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-        String s = stdInput.readLine();
-        if(s != null){
-            return Double.parseDouble(s.substring(1, 5));
-        }
-        throw new Exception();
+    private void showResults(Map bestPhone){
+        Stage resultsStage = new Stage();
+        resultsStage.setTitle("Results");
+        HBox hBox = new HBox(new Label(bestPhone.toString()));
+        Scene scene = new Scene(hBox);
+        resultsStage.setScene(scene);
+        resultsStage.show();
     }
 
     private void save(String path){
