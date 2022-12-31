@@ -16,6 +16,7 @@ import javafx.stage.WindowEvent;
 import main.Phone;
 import main.PhonesGenerator;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -76,7 +77,11 @@ public class App extends javafx.application.Application {
 
         userButton.setOnAction(event -> {
             primaryStage.close();
-            userModule.start();
+            try {
+                userModule.start();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 }

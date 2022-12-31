@@ -1,7 +1,7 @@
 {
   "name": "iPhone 14",
   "price": 5149,
-  "features" : ["eSIM", "IP68", "stereo", "5g"],
+  "features" : 4,
   "ram": 6,
   "cpu": 817125,
   "storage": 128,

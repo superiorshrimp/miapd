@@ -6,6 +6,8 @@ plugins {
 
 dependencies {
     implementation 'org.json:json:20211205'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
+
 }
 
 application {
