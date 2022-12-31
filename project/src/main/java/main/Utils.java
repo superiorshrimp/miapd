@@ -92,13 +92,13 @@ public class Utils{
             }
         }
 
-        String[] args = command.toString().split(" ");
+        String[] args = command.toString().split(" +");
         Process proc = Runtime.getRuntime().exec(args);
         proc.waitFor();
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
         String s = stdInput.readLine();
         s = s.substring(1, s.length() - 1);
-        String[] strings = s.split(" ");
+        String[] strings = s.split(" +");
         Double[] formattedValues = new Double[strings.length];
         for (int x = 0; x < strings.length; x ++){
             System.out.println(strings[x]);

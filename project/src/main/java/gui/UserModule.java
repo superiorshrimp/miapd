@@ -64,7 +64,9 @@ public class UserModule {
         int xIdx = vBoxes.get(UserModule.stageNumber).getValue() / labels.size();
         int yIdx = vBoxes.get(UserModule.stageNumber).getValue() % labels.size();
 
-        ChoiceBox<Integer> cb = new ChoiceBox<>(FXCollections.observableArrayList(1, 3, 5, 7, 9));
+        ChoiceBox<String> cb = new ChoiceBox<>(FXCollections.observableArrayList(
+                "1/9", "1/7", "1/5", "1/3", "1", "3", "5", "7", "9"
+        ));
 
         hBox.setAlignment(Pos.CENTER);
         VBox vBox = new VBox(infoLabel, hBox, cb, nextButton);
@@ -96,7 +98,19 @@ public class UserModule {
             }
         });
 
-        cb.setOnAction(event -> userPreferences[xIdx][yIdx] = cb.getValue());
+        cb.setOnAction(event -> {
+            String val = cb.getValue();
+            if(val.equals("1")){
+                userPreferences[xIdx][yIdx] = 1;
+            }
+            else if(val.length() == 1) {
+                userPreferences[xIdx][yIdx] = Float.parseFloat(val);
+            }
+            else{
+                String s = String.valueOf(val.charAt(2));
+                userPreferences[xIdx][yIdx] = (float)1 / Integer.parseInt(s);
+            }
+        });
 
         userStage.setOnCloseRequest((WindowEvent we) -> System.exit(0));
     }
@@ -127,12 +141,12 @@ public class UserModule {
 
         String[] args = command.toString().split(" ");
         Process proc = Runtime.getRuntime().exec(args);
-        System.out.println(Arrays.toString(args));
+//        System.out.println(Arrays.toString(args));
         proc.waitFor();
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
         String s = stdInput.readLine();
         s = s.substring(1, s.length() - 1);
-        String[] strings = s.split(" ");
+        String[] strings = s.split(" +");
         Double[] formattedValues = new Double[strings.length];
         System.out.println(Arrays.toString(strings));
         for (int x = 0; x < strings.length; x ++){
@@ -140,7 +154,7 @@ public class UserModule {
             formattedValues[x] = Double.parseDouble(strings[x]);
         }
 
-        System.out.println(Arrays.toString(formattedValues));
+//        System.out.println(Arrays.toString(formattedValues));
         double[][] phones = getPhones();
 
         for (double[] phone : phones){
