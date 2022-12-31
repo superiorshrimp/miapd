@@ -105,9 +105,6 @@ public class Utils{
             formattedValues[x] = Double.parseDouble(strings[x]);
         }
 
-        if(s == null){
-            throw new Exception();
-        }
         double[][] phones = getPhones(labels, n);
 
         for (double[] phone : phones){

@@ -16,18 +16,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import main.Phone;
-import main.PhonesGenerator;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class App extends javafx.application.Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        PhonesGenerator phonesGenerator = new PhonesGenerator("../data/phones/");
-        LinkedList<Phone> phones = phonesGenerator.getPhones();
-
         ArrayList<String> labels = Phone.getLabels();
         ExpertModule expertModule = new ExpertModule(labels, this);
         UserModule userModule = new UserModule(labels);
@@ -44,13 +39,6 @@ public class App extends javafx.application.Application {
         userButton.setFont(Font.font("Verdana", 20));
 
         hBox.setAlignment(Pos.CENTER);
-//        Image image = new Image("xiaomi lepsze.jpg");
-//        ImageView imageView = new ImageView();
-//        imageView.setImage(image);
-//        imageView.setX(10);
-//        imageView.setY(10);
-//        imageView.setFitWidth(575);
-//        imageView.setPreserveRatio(true);
         hBox.getChildren().addAll(expertButton, userButton);
 
         Button gitUrl = new Button("Copy Github repo URL");
@@ -84,9 +72,7 @@ public class App extends javafx.application.Application {
         primaryStage.setTitle("App");
         primaryStage.setScene(scene);
         primaryStage.show();
-        primaryStage.setOnCloseRequest((WindowEvent we) -> {
-            System.exit(0);
-        });
+        primaryStage.setOnCloseRequest((WindowEvent we) -> System.exit(0));
 
         expertButton.setOnAction(event -> {
             primaryStage.close();

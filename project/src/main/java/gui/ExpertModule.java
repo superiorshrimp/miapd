@@ -109,9 +109,7 @@ public class ExpertModule{
         expertStage.setScene(scene);
         expertStage.show();
 
-        expertStage.setOnCloseRequest((WindowEvent we) -> {
-            System.exit(0);
-        });
+        expertStage.setOnCloseRequest((WindowEvent we) -> System.exit(0));
 
         nextButton.setOnAction(event -> {
             if(this.isAllFilled()){
@@ -134,13 +132,9 @@ public class ExpertModule{
 
         String path = "../data/priorities/priorities.txt";
 
-        saveButton.setOnAction(event -> {
-            this.save(path);
-        });
+        saveButton.setOnAction(event -> this.save(path));
 
-        loadButton.setOnAction(event -> {
-            this.load(path);
-        });
+        loadButton.setOnAction(event -> this.load(path));
 
     }
 
@@ -164,7 +158,7 @@ public class ExpertModule{
         }
     }
 
-    private void showResults(Map bestPhone){
+    private void showResults(Map<?, ?> bestPhone){
         Stage resultsStage = new Stage();
         resultsStage.setTitle("Results");
         HBox hBox = new HBox(new Label(bestPhone.toString()));
@@ -212,6 +206,7 @@ public class ExpertModule{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert str != null;
         String[] vals = str.split(" ");
 
         int i = 0;

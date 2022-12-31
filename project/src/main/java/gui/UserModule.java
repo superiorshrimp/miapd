@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
-
 public class UserModule {
     private static int stageNumber = 0;
     ArrayList<Label> labels = new ArrayList<>();
@@ -46,10 +45,6 @@ public class UserModule {
             vBox.setAlignment(Pos.CENTER);
             vBox.setPadding(new Insets(10, 10, 10, 10));
             vBoxes.add(new Pair<>(vBox, i*7+i+1));
-//            System.out.println(i*7+i+1);
-//            System.out.println((i*7+i+1) / labels.size());
-//            System.out.println((i*7+i+1) % labels.size());
-//            System.out.println();
         }
         Collections.shuffle(vBoxes);
         Label label = this.labels.get(labels.size()-1);
@@ -66,7 +61,6 @@ public class UserModule {
         Button nextButton = new Button("Next");
         Label infoLabel = new Label("Compare importance of first feature to second");
         HBox hBox = new HBox(vBoxes.get(UserModule.stageNumber).getKey(), vBoxes.get(UserModule.stageNumber + 1).getKey());
-        //System.out.println(UserModule.stageNumber);
         int xIdx = vBoxes.get(UserModule.stageNumber).getValue() / labels.size();
         int yIdx = vBoxes.get(UserModule.stageNumber).getValue() % labels.size();
 
@@ -102,21 +96,12 @@ public class UserModule {
             }
         });
 
-        cb.setOnAction(event -> {
-            userPreferences[xIdx][yIdx] = cb.getValue();
-            for (var line : this.userPreferences){
-                //System.out.println(Arrays.toString(line));
-            }
-            //System.out.println();
-        });
+        cb.setOnAction(event -> userPreferences[xIdx][yIdx] = cb.getValue());
 
-        userStage.setOnCloseRequest((WindowEvent we) -> {
-            System.exit(0);
-        });
+        userStage.setOnCloseRequest((WindowEvent we) -> System.exit(0));
     }
 
     //Function to get results from BE
-
     private void calculateResults() throws Exception {
         float size = this.userPreferences.length;
         for ( int x = 0; x < size - 2; x ++ ){
@@ -155,9 +140,6 @@ public class UserModule {
             formattedValues[x] = Double.parseDouble(strings[x]);
         }
 
-        if(s == null){
-            throw new Exception();
-        }
         System.out.println(Arrays.toString(formattedValues));
         double[][] phones = getPhones();
 
@@ -229,7 +211,7 @@ public class UserModule {
 
         return phoneStatisticsMatrixNormalized;
     }
-    private void showResults(Map bestPhone){
+    private void showResults(Map<?, ?> bestPhone){
         Stage resultsStage = new Stage();
         resultsStage.setTitle("Results");
         HBox hBox = new HBox(new Label(bestPhone.toString()));
